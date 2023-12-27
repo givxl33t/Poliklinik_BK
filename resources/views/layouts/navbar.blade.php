@@ -15,7 +15,7 @@
                 </li>
             </ul>
             <div class="kanan navbar-nav ml-auto">
-                    <a href="{{ route('login') }}" class="btn btn-lg login btn-outline-primary mx-2">Login</a>
+                <a href="{{ route('login') }}" class="btn btn-lg login btn-outline-primary mx-2">Login</a>
             </div>
         </div>
     </div>

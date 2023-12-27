@@ -11,13 +11,8 @@
                     Home
                 </a>
                 <a href="{{ url('antrianpage') }}" class="text-white-50 mt-2">
-                    Produk
+                    Antrian
                 </a>
-                @guest
-                @endguest
-                @auth
-                    <a href="{{ route('logout') }}" class="text-white-50 mt-2">Logout</a>
-                @endauth
             </div>
             <div class="col col-lg-3 d-flex flex-column mb-lg-0 mb-4">
                 <h5 class="fw-bold text-white mb-3">Contact</h5>
