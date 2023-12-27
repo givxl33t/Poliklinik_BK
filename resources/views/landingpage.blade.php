@@ -26,7 +26,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h3 class="mb-3">Daftar Pasien</h3>
+                <h3 class="mb-3">Daftar Pasien (WIP)</h3>
             </div>
         </div>
         <div class="row">
