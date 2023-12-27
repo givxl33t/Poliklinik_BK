@@ -22,7 +22,7 @@
     <!-- Boostrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
-    <title>Abdimas | @yield('title')</title>
+    <title>e-Poli | @yield('title')</title>
 </head>
 
 <body>

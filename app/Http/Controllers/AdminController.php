@@ -2,193 +2,201 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PelakuUmkm;
-use App\Models\Product;
-use App\Models\Transaction;
-use App\Models\Umkm;
-use App\Models\User;
+use App\Models\Dokter;
+use App\Models\Pasien;
+use App\Models\Periksa;
+use App\Models\Obat;
+use App\Models\Poli;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        $userCount = User::count();
-        $umkmCount = Umkm::count();
-        $ownerCount = PelakuUmkm::count();
-        $transactionCount = Transaction::count();
-        $productCount = Product::count();
+        $dokterCount = Dokter::count();
+        $pasienCount = Pasien::count();
+        $periksaCount = Periksa::count();
+        $poliCount = Poli::count();
+        $obatCount = Obat::count();
 
-        return view('admin/app', ['owners_count' => $ownerCount, 'users_count' => $userCount, 'umkms_count' => $umkmCount, 'transactions_count' => $transactionCount, 'products_count' => $productCount]);
+        return view('admin/app', ['dokter_count' => $dokterCount, 'pasien_count' => $pasienCount, 'periksa_count' => $periksaCount, 'poli_count' => $poliCount, 'obat_count' => $obatCount]);
     }
 
-    public function listuser(Request $request)
+    public function listpasien(Request $request)
     {
-        $userCount = User::count();
-        $umkmCount = Umkm::count();
-        $ownerCount = PelakuUmkm::count();
-        $transactionCount = Transaction::count();
-        $productCount = Product::count();
+        $dokterCount = Dokter::count();
+        $pasienCount = Pasien::count();
+        $periksaCount = Periksa::count();
+        $poliCount = Poli::count();
+        $obatCount = Obat::count();
 
         $keyword = $request->keyword;
-        $users = User::where('name', 'LIKE', '%' . $keyword . '%')
+        $pasiens = Pasien::where('nama', 'LIKE', '%' . $keyword . '%')
             ->simplePaginate(20);
 
-        return view('admin/user/listuser', ['owners_count' => $ownerCount, 'users_count' => $userCount, 'umkms_count' => $umkmCount, 'users' => $users, 'transactions_count' => $transactionCount, 'products_count' => $productCount]);
+        return view('admin/pasien/listpasien', ['dokter_count' => $dokterCount, 'pasien_count' => $pasienCount, 'periksa_count' => $periksaCount, 'pasiens' => $pasiens, 'poli_count' => $poliCount, 'obat_count' => $obatCount]);
     }
 
-    public function detailuser($id)
+    public function detailpasien($id)
     {
-        $userCount = User::count();
-        $umkmCount = Umkm::count();
-        $ownerCount = PelakuUmkm::count();
-        $transactionCount = Transaction::count();
-        $productCount = Product::count();
-        $user = User::with(['transactions.detail_transactions.umkm.products'])
+        $dokterCount = Dokter::count();
+        $pasienCount = Pasien::count();
+        $periksaCount = Periksa::count();
+        $poliCount = Poli::count();
+        $obatCount = Obat::count();
+        $pasien = Pasien::with(['daftar_polis'])
             ->findOrfail($id);
 
-        return view('admin/user/detailuser', ['owners_count' => $ownerCount, 'users_count' => $userCount, 'umkms_count' => $umkmCount, 'user' => $user, 'transactions_count' => $transactionCount, 'products_count' => $productCount]);
+        return view('admin/pasien/detailpasien', ['dokter_count' => $dokterCount, 'pasien_count' => $pasienCount, 'periksa_count' => $periksaCount, 'pasien' => $pasien, 'poli_count' => $poliCount, 'obat_count' => $obatCount]);
     }
 
-    public function destroyuser($id)
+    public function destroypasien($id)
     {
-        User::destroy($id);
-        return redirect(route('showlistuser'))->with('success', 'User Berhasil Dihapus!');
+        Pasien::destroy($id);
+        return redirect(route('showlistpasien'))->with('success', 'Pasien Berhasil Dihapus!');
     }
 
-    public function listowner(Request $request)
+    public function listdokter(Request $request)
     {
-        $userCount = User::count();
-        $umkmCount = Umkm::count();
-        $ownerCount = PelakuUmkm::count();
-        $transactionCount = Transaction::count();
-        $productCount = Product::count();
+        $dokterCount = Dokter::count();
+        $pasienCount = Pasien::count();
+        $periksaCount = Periksa::count();
+        $poliCount = Poli::count();
+        $obatCount = Obat::count();
 
         $keyword = $request->keyword;
-        $owners = PelakuUmkm::where('name', 'LIKE', '%' . $keyword . '%')
+        $dokters = Dokter::where('nama', 'LIKE', '%' . $keyword . '%')
             ->simplePaginate(20);
 
-        return view('admin/owner/listowner', ['owners_count' => $ownerCount, 'users_count' => $userCount, 'umkms_count' => $umkmCount, 'pelaku_umkms' => $owners, 'transactions_count' => $transactionCount, 'products_count' => $productCount]);
+        return view('admin/dokter/listdokter', ['dokter_count' => $dokterCount, 'pasien_count' => $pasienCount, 'periksa_count' => $periksaCount, 'dokters' => $dokters, 'poli_count' => $poliCount, 'obat_count' => $obatCount]);
     }
 
-    public function detailowner($id)
+    public function detaildokter($id)
     {
-        $userCount = User::count();
-        $umkmCount = Umkm::count();
-        $ownerCount = PelakuUmkm::count();
-        $transactionCount = Transaction::count();
-        $productCount = Product::count();
-        $owner = PelakuUmkm::with(['umkms'])
+        $dokterCount = Dokter::count();
+        $pasienCount = Pasien::count();
+        $periksaCount = Periksa::count();
+        $poliCount = Poli::count();
+        $obatCount = Obat::count();
+        $dokter = Dokter::with(['jadwal_periksas'])
             ->findOrfail($id);
 
-        return view('admin/owner/detailowner', ['owners_count' => $ownerCount, 'users_count' => $userCount, 'umkms_count' => $umkmCount, 'pelaku_umkm' => $owner, 'transactions_count' => $transactionCount, 'products_count' => $productCount]);
+        return view('admin/dokter/detaildokter', ['dokter_count' => $dokterCount, 'pasien_count' => $pasienCount, 'periksa_count' => $periksaCount, 'dokter' => $dokter, 'poli_count' => $poliCount, 'obat_count' => $obatCount]);
     }
 
-    public function destroyowner($id)
+    public function destroydokter($id)
     {
-        PelakuUmkm::destroy($id);
-        return redirect(route('showlistowner'))->with('success', 'Owner Berhasil Dihapus!');
+        Dokter::destroy($id);
+        return redirect(route('showlistdokter'))->with('success', 'Dokter Berhasil Dihapus!');
     }
 
-    public function listumkm(Request $request)
+    public function listpoli(Request $request)
     {
-        $userCount = User::count();
-        $umkmCount = Umkm::count();
-        $ownerCount = PelakuUmkm::count();
-        $transactionCount = Transaction::count();
-        $productCount = Product::count();
+        $dokterCount = Dokter::count();
+        $pasienCount = Pasien::count();
+        $periksaCount = Periksa::count();
+        $poliCount = Poli::count();
+        $obatCount = Obat::count();
 
         $keyword = $request->keyword;
-        $umkms = Umkm::with(['pelaku_umkm', 'category_umkm'])->where('name', 'LIKE', '%' . $keyword . '%')
+        $polis = Poli::where('nama_poli', 'LIKE', '%' . $keyword . '%')
             ->simplePaginate(20);
 
-        return view('admin/umkm/listumkm', ['owners_count' => $ownerCount, 'users_count' => $userCount, 'umkms_count' => $umkmCount, 'umkms' => $umkms, 'transactions_count' => $transactionCount, 'products_count' => $productCount]);
+        return view('admin/poli/listpoli', ['dokter_count' => $dokterCount, 'pasien_count' => $pasienCount, 'periksa_count' => $periksaCount, 'polis' => $polis, 'poli_count' => $poliCount, 'obat_count' => $obatCount]);
     }
 
-    public function detailumkm($id)
+    public function detailpoli($id)
     {
-        $userCount = User::count();
-        $umkmCount = Umkm::count();
-        $ownerCount = PelakuUmkm::count();
-        $transactionCount = Transaction::count();
-        $productCount = Product::count();
-        $umkm = Umkm::with(['products', 'detail_transactions', 'products', 'category_umkm', 'pelaku_umkm'])
+        $dokterCount = Dokter::count();
+        $pasienCount = Pasien::count();
+        $periksaCount = Periksa::count();
+        $poliCount = Poli::count();
+        $obatCount = Obat::count();
+        $poli = Poli::with(['dokters'])
             ->findOrfail($id);
 
-        return view('admin/umkm/detailumkm', ['owners_count' => $ownerCount, 'users_count' => $userCount, 'umkms_count' => $umkmCount, 'umkm' => $umkm, 'transactions_count' => $transactionCount, 'products_count' => $productCount]);
+        return view('admin/poli/detailpoli', ['dokter_count' => $dokterCount, 'pasien_count' => $pasienCount, 'periksa_count' => $periksaCount, 'poli' => $poli, 'poli_count' => $poliCount, 'obat_count' => $obatCount]);
     }
 
-    public function destroyumkm($id)
+    public function destroypoli($id)
     {
-        Umkm::destroy($id);
-        return redirect(route('showlistumkm'))->with('success', 'UMKM Berhasil Dihapus!');
+        Poli::destroy($id);
+        return redirect(route('showlistpoli'))->with('success', 'Poliklinik Berhasil Dihapus!');
     }
 
-    public function listproduct(Request $request)
+    public function listobat(Request $request)
     {
-        $userCount = User::count();
-        $umkmCount = Umkm::count();
-        $ownerCount = PelakuUmkm::count();
-        $transactionCount = Transaction::count();
-        $productCount = Product::count();
+        $dokterCount = Dokter::count();
+        $pasienCount = Pasien::count();
+        $periksaCount = Periksa::count();
+        $poliCount = Poli::count();
+        $obatCount = Obat::count();
 
         $keyword = $request->keyword;
-        $products = Product::with(['category_product', 'umkm'])->where('name', 'LIKE', '%' . $keyword . '%')
+        $obats = Obat::where('nama_obat', 'LIKE', '%' . $keyword . '%')
             ->simplePaginate(20);
 
-        return view('admin/product/listproduct', ['owners_count' => $ownerCount, 'users_count' => $userCount, 'umkms_count' => $umkmCount, 'products' => $products, 'transactions_count' => $transactionCount, 'products_count' => $productCount]);
+        return view('admin/obat/listobat', ['dokter_count' => $dokterCount, 'pasien_count' => $pasienCount, 'periksa_count' => $periksaCount, 'obats' => $obats, 'poli_count' => $poliCount, 'obat_count' => $obatCount]);
     }
 
-    public function detailproduct($id)
+    public function createobat()
     {
-        $userCount = User::count();
-        $umkmCount = Umkm::count();
-        $ownerCount = PelakuUmkm::count();
-        $transactionCount = Transaction::count();
-        $productCount = Product::count();
-        $product = Product::with(['category_product', 'umkm.category_umkm', 'umkm.pelaku_umkm'])
-            ->findOrfail($id);
-
-        return view('admin/product/detailproduct', ['owners_count' => $ownerCount, 'users_count' => $userCount, 'umkms_count' => $umkmCount, 'product' => $product, 'transactions_count' => $transactionCount, 'products_count' => $productCount]);
+        $dokterCount = Dokter::count();
+        $pasienCount = Pasien::count();
+        $periksaCount = Periksa::count();
+        $poliCount = Poli::count();
+        $obatCount = Obat::count();
+        return view('admin/obat/addobat', ['dokter_count' => $dokterCount, 'pasien_count' => $pasienCount, 'periksa_count' => $periksaCount, 'poli_count' => $poliCount, 'obat_count' => $obatCount]);
     }
 
-    public function destroyproduct($id)
+    public function storeobat(Request $request)
     {
-        Product::destroy($id);
-        return redirect(route('showlistproduct'))->with('success', 'UMKM Berhasil Dihapus!');
+        $request->validate([
+            'nama_obat' => 'required',
+            'kemasan' => 'required',
+            'harga' => 'required',
+        ]);
+
+        Obat::create([
+            'nama_obat' => $request->nama_obat,
+            'kemasan' => $request->kemasan,
+            'harga' => $request->harga,
+        ]);
+
+        return redirect(route('showlistobat'))->with('success', 'Obat Berhasil Ditambahkan!');
     }
 
-    public function listtransaction(Request $request)
+    public function editobat($id)
     {
-        $userCount = User::count();
-        $umkmCount = Umkm::count();
-        $ownerCount = PelakuUmkm::count();
-        $transactionCount = Transaction::count();
-        $productCount = Product::count();
-
-        $keyword = $request->keyword;
-        $transactions = Transaction::with(['detail_transactions'])->where('created_at', 'LIKE', '%' . $keyword . '%')
-            ->simplePaginate(20);
-
-        return view('admin/transaction/listtransaction', ['owners_count' => $ownerCount, 'users_count' => $userCount, 'umkms_count' => $umkmCount, 'transactions' => $transactions, 'transactions_count' => $transactionCount, 'products_count' => $productCount]);
+        $dokterCount = Dokter::count();
+        $pasienCount = Pasien::count();
+        $periksaCount = Periksa::count();
+        $poliCount = Poli::count();
+        $obatCount = Obat::count();
+        $obat = Obat::find($id);
+        return view('admin/obat/editobat', ['dokter_count' => $dokterCount, 'pasien_count' => $pasienCount, 'periksa_count' => $periksaCount, 'obat' => $obat, 'poli_count' => $poliCount, 'obat_count' => $obatCount]);
     }
 
-    public function detailtransaction($id)
+    public function updateobat(Request $request, $id)
     {
-        $userCount = User::count();
-        $umkmCount = Umkm::count();
-        $ownerCount = PelakuUmkm::count();
-        $transactionCount = Transaction::count();
-        $productCount = Product::count();
-        $transaction = Transaction::with(['detail_transactions.product.category_product', 'detail_transactions.product.umkm.category_umkm', 'user'])
-            ->findOrfail($id);
+        $request->validate([
+            'nama_obat' => 'required',
+            'kemasan' => 'required',
+            'harga' => 'required',
+        ]);
 
-        return view('admin/transaction/detailtransaction', ['owners_count' => $ownerCount, 'users_count' => $userCount, 'umkms_count' => $umkmCount, 'transaction' => $transaction, 'transactions_count' => $transactionCount, 'products_count' => $productCount]);
+        $obat = Obat::find($id);
+        $obat->nama_obat = $request->nama_obat;
+        $obat->kemasan = $request->kemasan;
+        $obat->harga = $request->harga;
+        $obat->save();
+
+        return redirect(route('showlistobat'))->with('success', 'Obat Berhasil Diubah!');
     }
 
-    public function destroytransaction($id)
+    public function destroyobat($id)
     {
-        Transaction::destroy($id);
-        return redirect(route('showlisttransaction'))->with('success', 'Transaction Berhasil Dihapus!');
+        Obat::destroy($id);
+        return redirect(route('showlistobat'))->with('success', 'Obat Berhasil Dihapus!');
     }
 }

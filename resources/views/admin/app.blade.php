@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bengkelin | Admin Side</title>
+    <title>e-Poli | Admin Side</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -49,8 +49,8 @@
                             <!-- small box -->
                             <div class="small-box bg-info">
                                 <div class="inner">
-                                    <h3>{{ $users_count }}</h3>
-                                    <p>Users</p>
+                                    <h3>{{ $pasien_count }}</h3>
+                                    <p>Pasien</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-bag"></i>
@@ -62,8 +62,8 @@
                             <!-- small box -->
                             <div class="small-box bg-primary">
                                 <div class="inner">
-                                    <h3>{{ $owners_count }}</h3>
-                                    <p>Owners</p>
+                                    <h3>{{ $dokter_count }}</h3>
+                                    <p>Dokter</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
@@ -75,8 +75,8 @@
                             <!-- small box -->
                             <div class="small-box bg-warning">
                                 <div class="inner">
-                                    <h3 class="text-white">{{ $umkms_count }}</h3>
-                                    <p class="text-white">UMKMs</p>
+                                    <h3 class="text-white">{{ $poli_count }}</h3>
+                                    <p class="text-white">Poliklinik</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
@@ -87,8 +87,8 @@
                             <!-- small box -->
                             <div class="small-box bg-success">
                                 <div class="inner">
-                                    <h3 class="text-white">{{ $transactions_count }}</h3>
-                                    <p class="text-white">Transactions</p>
+                                    <h3 class="text-white">{{ $periksa_count }}</h3>
+                                    <p class="text-white">Pemeriksaan</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
@@ -99,8 +99,8 @@
                             <!-- small box -->
                             <div class="small-box bg-danger">
                                 <div class="inner">
-                                    <h3>{{ $products_count }}</h3>
-                                    <p>Products</p>
+                                    <h3>{{ $obat_count }}</h3>
+                                    <p>Obat</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>

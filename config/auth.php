@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'doctors',
     ],
 
     /*
@@ -38,15 +38,11 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'doctors',
         ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
-        ],
-        'pelakuumkm' => [
-            'driver' => 'session',
-            'provider' => 'pelakuumkms',
         ],
     ],
 
@@ -68,17 +64,13 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'doctors' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Dokter::class,
         ],
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
-        ],
-        'pelakuumkms' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\PelakuUmkm::class,
         ],
     ],
 
@@ -98,8 +90,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'doctors' => [
+            'provider' => 'doctors',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

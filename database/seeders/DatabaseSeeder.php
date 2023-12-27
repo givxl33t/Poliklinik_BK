@@ -16,69 +16,123 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('admins')->insert([
+        DB::table('admin')->insert([
             [
-                'name' => 'Admin',
+                'nama' => 'Admin',
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('password'),
+                'created_at' => now(),
+                'updated_at' => now()
             ]
         ]);
 
-        DB::table('users')->insert([
+        DB::table('pasien')->insert([
             [
-                'name' => 'User1',
-                'email' => 'user1@gmail.com',
-                'phone_number' => '083891428869',
-                'nik' => '1122334455',
-                'address' => 'Kp. Kemuning RT 01 RW 04, Kemuning Legok, Kabupaten Tangerang, Banten',
-                'password' => Hash::make('password'),
+                'id' => '1',
+                'nama' => 'John Doe',
+                'alamat' => 'Kp. Kemuning RT 01 RW 04, Kemuning Legok, Kabupaten Tangerang, Banten',
+                'no_ktp' => '1122334455',
+                'no_hp' => '083891428869',
+                'no_rm' => '202312-1',
+                'created_at' => now(),
+                'updated_at' => now()
             ]
         ]);
 
-        DB::table('pelaku_umkms')->insert([
+        DB::table('poli')->insert([
             [
-                'name' => 'UMKM1',
-                'email' => 'umkm1@gmail.com',
-                'phone_number' => '083891428869',
-                'nik' => '1122334455',
-                'address' => 'Kp. Kemuning RT 01 RW 04, Kemuning Legok, Kabupaten Tangerang, Banten',
+                'id' => '1',
+                'nama_poli' => 'POLI001',
+                'keterangan' => 'Poli Umum 001',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        ]);
+
+        DB::table('dokter')->insert([
+            [
+                'id' => '1',
+                'nama' => 'Dr. Jane Doe',
+                'email' => 'dokter@gmail.com',
                 'password' => Hash::make('password'),
+                'alamat' => 'Kp. Kemuning RT 01 RW 04, Kemuning Legok, Kabupaten Tangerang, Banten',
+                'no_hp' => '083891428869',
+                'id_poli' => '1',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
         ]);
 
-        DB::table('category_umkms')->insert([
+        DB::table('jadwal_periksa')->insert([
             [
-                'name' => 'Makanan',
+                'id' => '1',
+                'id_dokter' => '1',
+                'hari' => 'Senin',
+                'jam_mulai' => '08:00:00',
+                'jam_selesai' => '12:00:00',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
-                'name' => 'Fashion',
-            ],
-            [
-                'name' => 'Elektronik',
-            ],
-            [
-                'name' => 'Jasa',
-            ],
-            [
-                'name' => 'Lainnya',
+                'id' => '2',
+                'id_dokter' => '1',
+                'hari' => 'Selasa',
+                'jam_mulai' => '08:00:00',
+                'jam_selesai' => '12:00:00',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
         ]);
 
-        DB::table('category_products')->insert([
+        DB::table('daftar_poli')->insert([
             [
-                'name' => 'Makanan',
+                'id' => '1',
+                'id_pasien' => '1',
+                'id_jadwal' => '1',
+                'keluhan' => 'Sakit Kepala',
+                'no_antrian' => '1',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        ]);
+
+        DB::table('periksa')->insert([
+            [
+                'id' => '1',
+                'id_daftar_poli' => '1',
+                'tgl_periksa' => '2021-06-01',
+                'catatan' => 'Sakit Kepala',
+                'biaya_periksa' => '160000',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        ]);
+
+        DB::table('obat')->insert([
+            [
+                'id' => '1',
+                'nama_obat' => 'Paracetamol',
+                'kemasan' => '10 Tablet',
+                'harga' => '10000',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
-                'name' => 'Fashion',
+                'id' => '2',
+                'nama_obat' => 'Amoxilin',
+                'kemasan' => '10 Tablet',
+                'harga' => '20000',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
+        ]);
+
+        DB::table('detail_periksa')->insert([
             [
-                'name' => 'Elektronik',
-            ],
-            [
-                'name' => 'Jasa',
-            ],
-            [
-                'name' => 'Lainnya',
+                'id_periksa' => '1',
+                'id_obat' => '1',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
         ]);
     }
