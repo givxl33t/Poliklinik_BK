@@ -44,7 +44,7 @@
             </div>
             <div class="my-5">
                 <div class="header">
-                    <h3>Data UMKM</h3>
+                    <h3>Data Jadwal</h3>
                     <p class="text-secondary">Data jadwal dokter {{ $dokter->nama }}</p>
                 </div>
                 @php

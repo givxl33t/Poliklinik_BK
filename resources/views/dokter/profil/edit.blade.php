@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         @foreach ($dokters as $dokter)
-        <div class="row">
+        <div class="row my-5">
             <div class="col">
                 <h1 class="text-center">Edit Profil {{ $dokter->nama }}</h1>
             </div>

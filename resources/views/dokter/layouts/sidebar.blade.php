@@ -36,7 +36,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Menu Dokter</h6>
-                <a class="collapse-item" href="{{ '/dokter' }}">Periksa</a>
+                <a class="collapse-item" href="{{ '/dokter' }}">Daftar Jadwal</a>
                 <a class="collapse-item" href="{{ '/dokter/riwayat' }}">Riwayat Pasien</a>
                 <a class="collapse-item" href="{{ '/dokter/profil' }}">Edit Profil</a>
             </div>

@@ -10,7 +10,7 @@
             <div class="mt-5">
                 <form action="" method="GET">
                     @csrf
-                    <input type="text" class="form-control" placeholder="Cari Obat disini" name="keyword"
+                    <input type="text" class="form-control" placeholder="Cari obat disini" name="keyword"
                         style="border-radius: 12px">
                 </form>
             </div>
@@ -34,10 +34,9 @@
                             <td>{{ $obat->kemasan }}</td>
                             <td>Rp{{ number_format($obat->harga, 0, ',', '.') }}</td>
                             <td class="d-flex align-items-center">
-                                <a href="/adminlistobat/{{ $obat->id }}/delete" class="btn btn-danger"><i
+                                <a href="/adminlistobat/{{ $obat->id }}/delete" class="btn btn-danger mr-1"><i
                                         class="fa-solid fa-trash-can"></i></a>
-                                <div style="width: 10px"></div>
-                                <a href="/adminlistobat/{{ $obat->id }}/edit" class="btn btn-primary"><i
+                                <a href="/adminlistobat/{{ $obat->id }}/edit" class="btn btn-primary mr-1"><i
                                         class="fa-solid fa-edit"></i></a>
                             </td>
                         </tr>

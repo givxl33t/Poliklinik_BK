@@ -191,7 +191,7 @@ nav .kanan .signup {
 }
 
 .hero {
-    height: 10vh;
+    height: 30vh;
     width: 100%;
     background-image: url("../css/hero.jpg");
     background-size: cover;

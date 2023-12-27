@@ -37,6 +37,9 @@ Route::middleware('auth:web')->group(function () {
     Route::get('/dokter', [DokterController::class, 'index'])->name('dokterindex');
     Route::get('/jadwalperiksa/add', [DokterController::class, 'createjadwal']);
     Route::post('/jadwalperiksa', [DokterController::class, 'storejadwal']);
+    Route::get('/jadwalperiksa/detailjadwalperiksa/{id}', [DokterController::class, 'detailjadwalperiksa']);
+    Route::get('/jadwalperiksa/detailjadwalperiksa/{id}/edit', [DokterController::class, 'editjadwal']);
+    Route::put('/jadwalperiksa/detailjadwalperiksa/{id}', [DokterController::class, 'updatejadwal']);
 
     // RIWAYAT PASIEN
     Route::get('/dokter/riwayat', [RiwayatDokterController::class, 'index'])->name('dokterriwayat');
@@ -52,14 +55,26 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('/adminlistpasien', [AdminController::class, 'listpasien'])->name('showlistpasien');
     Route::get('/detailpasien/{id}', [AdminController::class, 'detailpasien'])->name('detailpasien');
+    Route::get('/adminlistpasien/add', [AdminController::class, 'createpasien']);
+    Route::post('/adminlistpasien', [AdminController::class, 'storepasien']);
+    Route::get('/adminlistpasien/{id}/edit', [AdminController::class, 'editpasien']);
+    Route::put('/adminlistpasien/{id}', [AdminController::class, 'updatepasien']);
     Route::get('/adminlistpasien/{id}/delete', [AdminController::class, 'destroypasien'])->name('deletelistpasien');
 
     Route::get('/adminlistdokter', [AdminController::class, 'listdokter'])->name('showlistdokter');
     Route::get('/detaildokter/{id}', [AdminController::class, 'detaildokter'])->name('detaildokter');
+    Route::get('/adminlistdokter/add', [AdminController::class, 'createdokter']);
+    Route::post('/adminlistdokter', [AdminController::class, 'storedokter']);
+    Route::get('/adminlistdokter/{id}/edit', [AdminController::class, 'editdokter']);
+    Route::put('/adminlistdokter/{id}', [AdminController::class, 'updatedokter']);
     Route::get('/adminlistdokter/{id}/delete', [AdminController::class, 'destroydokter'])->name('deletelistdokter');
 
     Route::get('/adminlistpoli', [AdminController::class, 'listpoli'])->name('showlistpoli');
     Route::get('/detailpoli/{id}', [AdminController::class, 'detailpoli'])->name('detailpoli');
+    Route::get('/adminlistpoli/add', [AdminController::class, 'createpoli']);
+    Route::post('/adminlistpoli', [AdminController::class, 'storepoli']);
+    Route::get('/adminlistpoli/{id}/edit', [AdminController::class, 'editpoli']);
+    Route::put('/adminlistpoli/{id}', [AdminController::class, 'updatepoli']);
     Route::get('/adminlistpoli/{id}/delete', [AdminController::class, 'destroypoli'])->name('deletelistpoli');
 
     Route::get('/adminlistobat', [AdminController::class, 'listobat'])->name('showlistobat');

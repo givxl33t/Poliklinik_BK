@@ -73,15 +73,6 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
-            [
-                'id' => '2',
-                'id_dokter' => '1',
-                'hari' => 'Selasa',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '12:00:00',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
         ]);
 
         DB::table('daftar_poli')->insert([
