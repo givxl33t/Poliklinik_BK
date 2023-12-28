@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dokter;
 use App\Models\Periksa;
 use App\Models\DaftarPoli;
-use App\Models\Pasien;
-use App\Models\JadwalPeriksa;
 use App\Models\Obat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,8 +17,7 @@ class PeriksaController extends Controller
         $daftarpolis = DaftarPoli::with(['pasien', 'jadwal_periksa', 'periksas'])
             ->whereHas('jadwal_periksa', function ($query) use ($id) {
                 $query->where('id_dokter', $id);
-            })
-            ->get();
+            })->orderBy('no_antrian', 'asc')->get();
         
         return view('dokter.periksa.index', compact('daftarpolis'));
     }
