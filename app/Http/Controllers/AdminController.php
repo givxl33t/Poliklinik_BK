@@ -369,7 +369,7 @@ class AdminController extends Controller
         $request->validate([
             'nama_obat' => 'required',
             'kemasan' => 'required',
-            'harga' => 'required',
+            'harga' => 'required|numeric',
         ]);
 
         Obat::create([
