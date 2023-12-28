@@ -17,7 +17,7 @@ class AntrianPageController extends Controller
 
         // keyword nama pasien
         if ($request->has('keyword')) {
-            $antrians = DaftarPoli::with('pasien', 'jadwal_periksa')->whereHas('pasien', function ($query) use ($request) {
+            $antrians = DaftarPoli::with('pasien', 'jadwal_periksa.dokter.poli')->whereHas('pasien', function ($query) use ($request) {
                 $query->where('nama', 'like', "%{$request->keyword}%");
             })->orderBy('no_antrian', 'asc')->get();
         }

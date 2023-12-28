@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    {{-- umkm --}}
+    {{-- antrian --}}
     <div class="umkm">
         <div class="container">
             <div class="row">
@@ -41,7 +41,7 @@
                             <tr>
                                 <th scope="col">No Antrian</th>
                                 <th scope="col">Nama Pasien</th>
-                                <th scope="col">No Rekam Medis</th>
+                                <th scope="col">Nama Poli</th>
                                 <th scope="col">Hari</th>
                                 <th scope="col">Jam Mulai</th>
                                 <th scope="col">Jam Selesai</th>
@@ -53,7 +53,7 @@
                                 <tr>
                                     <td>{{ $antrian->no_antrian }}</td>
                                     <td>{{ $antrian->pasien->nama }}</td>
-                                    <td>{{ $antrian->pasien->no_rm }}</td>
+                                    <td>{{ $antrian->jadwal_periksa->dokter->poli->nama_poli }}</td>                       
                                     <td>{{ $antrian->jadwal_periksa->hari }}</td>
                                     <td>{{ $antrian->jadwal_periksa->jam_mulai }}</td>
                                     <td>{{ $antrian->jadwal_periksa->jam_selesai }}</td>

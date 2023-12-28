@@ -23,7 +23,10 @@ use App\Http\Controllers\DokterController;
 //     return view('landingpage');
 // });
 
-Route::get('/' , [LandingPageController::class, 'index']);
+Route::get('/' , [LandingPageController::class, 'index'])->name('landingpage');
+Route::post('/' , [LandingPageController::class, 'storepasien']);
+Route::post('/cekrekammedis' , [LandingPageController::class, 'cekrekammedis']);
+Route::post('/daftarpoli' , [LandingPageController::class, 'storedaftarpoli']);
 Route::get('/antrianpage', [AntrianPageController::class, 'index']);
 
 // AUTH
