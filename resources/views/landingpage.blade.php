@@ -121,14 +121,16 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="id_dokter" class="form-label">Dokter</label>
+                        <label for="id_dokter" class="form-label">Dokter & Jadwal</label>
                         <select class="form-select" aria-label="Default select example" name="id_dokter" id="dokterSelect">
                             <option selected>Pilih Dokter</option>
                             @foreach ($dokters as $dokter)
                                 // check if dokter has jadwal_periksas
                                 @if ($dokter->jadwal_periksas->count() > 0)
                                     // if dokter has jadwal_periksas, show dokter
-                                    <option value="{{ $dokter->id }}" data-poli="{{ $dokter->poli->id }}">{{ $dokter->nama }} | {{ $dokter->jadwal_periksas[0]->hari }}</option>
+                                    <option value="{{ $dokter->id }}" data-poli="{{ $dokter->poli->id }}">{{ $dokter->nama }} | {{ $dokter->jadwal_periksas[0]->hari }}
+                                        | {{ $dokter->jadwal_periksas[0]->jam_mulai }} - {{ $dokter->jadwal_periksas[0]->jam_selesai }}</option>
+                                    </option>
                                 @endif
                             @endforeach
                         </select>

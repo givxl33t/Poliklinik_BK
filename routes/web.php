@@ -7,6 +7,7 @@ use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\RiwayatDokterController;
 use App\Http\Controllers\AntrianPageController;
 use App\Http\Controllers\DokterController;
+use App\Http\Controllers\PeriksaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,13 +37,21 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // DOKTER
 Route::middleware('auth:web')->group(function () {
-    // INDEX PERIKSA
+    // INDEX JADWAL PERIKSA
     Route::get('/dokter', [DokterController::class, 'index'])->name('dokterindex');
     Route::get('/jadwalperiksa/add', [DokterController::class, 'createjadwal']);
     Route::post('/jadwalperiksa', [DokterController::class, 'storejadwal']);
     Route::get('/jadwalperiksa/detailjadwalperiksa/{id}', [DokterController::class, 'detailjadwalperiksa']);
     Route::get('/jadwalperiksa/detailjadwalperiksa/{id}/edit', [DokterController::class, 'editjadwal']);
     Route::put('/jadwalperiksa/detailjadwalperiksa/{id}', [DokterController::class, 'updatejadwal']);
+
+    // PERIKSA PASIEN
+    Route::get('/dokter/periksa', [PeriksaController::class, 'index'])->name('dokterperiksa');
+    Route::get('/dokter/periksa/detailpasien/{id}', [PeriksaController::class, 'detailpasien']);
+    Route::get('/dokter/periksa/detailpasien/{iddaftarpoli}/add', [PeriksaController::class, 'createperiksa']);
+    Route::post('/dokter/periksa/detailpasien', [PeriksaController::class, 'storeperiksa']);
+    Route::get('/dokter/periksa/detailpasien/{id}/edit', [PeriksaController::class, 'editperiksa']);
+    Route::put('/dokter/periksa/detailpasien/{id}', [PeriksaController::class, 'updateperiksa']);
 
     // RIWAYAT PASIEN
     Route::get('/dokter/riwayat', [RiwayatDokterController::class, 'index'])->name('dokterriwayat');

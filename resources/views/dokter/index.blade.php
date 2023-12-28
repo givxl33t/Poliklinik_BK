@@ -1,6 +1,6 @@
 @extends('dokter.layouts.app')
 
-@section('title', 'Jadwal Periksa')
+@section('title', 'Daftar Jadwal')
 
 @section('content')
     <div class="container">

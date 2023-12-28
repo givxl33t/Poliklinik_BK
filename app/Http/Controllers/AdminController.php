@@ -261,8 +261,6 @@ class AdminController extends Controller
         $obatCount = Obat::count();
 
         $keyword = $request->keyword;
-        // $polis = Poli::where('nama_poli', 'LIKE', '%' . $keyword . '%')
-        //     ->simplePaginate(20);
 
         $polis = Poli::with(['dokters'])
             ->where('nama_poli', 'LIKE', '%' . $keyword . '%')
