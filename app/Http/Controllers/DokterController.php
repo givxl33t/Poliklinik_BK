@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dokter;
 use App\Models\Periksa;
 use App\Models\DaftarPoli;
+use App\Models\Poli;
 use App\Models\JadwalPeriksa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -176,9 +177,10 @@ class DokterController extends Controller
     public function editdokter()
     {
         $id = Auth::user()->id;
-        $dokters = Dokter::all()->where('id', $id);
+        $dokter = Dokter::with(['poli'])->where('id', $id)->first();
+        $polis = Poli::all();
 
-        return view('dokter/profil/edit', ['dokters' => $dokters]);
+        return view('dokter/profil/edit', ['dokter' => $dokter, 'polis' => $polis]);
     }
 
     public function updatedokter(Request $request)
@@ -188,6 +190,7 @@ class DokterController extends Controller
             'alamat' => 'required',
             'email' => 'required|email|unique:dokter,email,' . $request->id,
             'no_hp' => 'required',
+            'id_poli' => 'required',
         ]);
 
         if ($request->filled('password')) {
@@ -199,6 +202,7 @@ class DokterController extends Controller
             'alamat' => $validated['alamat'],
             'email' => $validated['email'],
             'no_hp' => $validated['no_hp'],
+            'id_poli' => $validated['id_poli'],
         ];
 
         if ($request->filled('password')) {
