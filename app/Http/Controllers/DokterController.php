@@ -18,7 +18,6 @@ class DokterController extends Controller
     {
         $id = Auth::user()->id;
         $periksas = JadwalPeriksa::where('id_dokter', $id)
-            ->with(['daftar_polis', 'daftar_polis.pasien'])
             ->get();
 
         return view('dokter/index', ['periksas' => $periksas]);

@@ -17,7 +17,7 @@ class PeriksaController extends Controller
         $daftarpolis = DaftarPoli::with(['pasien', 'jadwal_periksa', 'periksas'])
             ->whereHas('jadwal_periksa', function ($query) use ($id) {
                 $query->where('id_dokter', $id);
-            })->orderBy('no_antrian', 'asc')->get();
+            })->orderByRaw('no_antrian IS NULL, no_antrian ASC')->get();
         
         return view('dokter.periksa.index', compact('daftarpolis'));
     }
@@ -72,6 +72,24 @@ class PeriksaController extends Controller
         }
 
         $daftarpoli = DaftarPoli::find($request->id_daftar_poli);
+
+        // find daftar poli where no_antrian > current no_antrian
+        $daftarpolis = DaftarPoli::where('no_antrian', '>', $daftarpoli->no_antrian)
+            ->where('id_jadwal', $daftarpoli->id_jadwal)
+            ->orderBy('no_antrian', 'asc')->get();
+
+        // update no_antrian for next patient
+        for ($i = 0; $i < count($daftarpolis); $i++) {
+            $daftarpolis[$i]->update([
+                'no_antrian' => $daftarpolis[$i]->no_antrian - 1,
+            ]);
+        }
+
+        $daftarpoli->update([
+            'no_antrian' => null,
+            'is_deleted' => 1,
+        ]);
+
         $pasienId = $daftarpoli->pasien->id;
 
         return redirect('/dokter/periksa/detailpasien/'. $pasienId)->with('success', 'Data periksa berhasil ditambahkan');

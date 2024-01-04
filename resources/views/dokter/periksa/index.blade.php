@@ -20,7 +20,11 @@
                                 <img src="/css/patient.jpg" class="img-fluid card-img-top">
                                 <div class="card-body">
                                     <h6 class="card-title">{{ $daftarpoli->pasien->nama }}</h6>
-                                    <h6 style="color:black">No. Antrian {{ $daftarpoli->no_antrian }}</h6>
+                                    @if ($daftarpoli->no_antrian == null)
+                                        <h6 style="color:black"><span class="badge bg-success">Sudah Diperiksa</span></h6>
+                                    @else
+                                        <h6 style="color:black">No. Antrian {{ $daftarpoli->no_antrian }}</h6>
+                                    @endif
                                     <span style="color:black">Keluhan {{ $daftarpoli->keluhan }}</span>
                                 </div>
                             </div>
