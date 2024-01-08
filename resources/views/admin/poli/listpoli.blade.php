@@ -37,7 +37,7 @@
                             <td>{{ $poli->dokters->count() }}</td>
                             <td>{{ $poli->created_at }}</td>
                             <td>{{ $poli->updated_at }}</td>
-                            <td class="d-flex justify-content-between align-items-center">
+                            <td class="d-flex align-items-center">
                                 <a href="/detailpoli/{{ $poli->id }}" class="btn btn-warning mr-1 text-white">
                                     <i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>
                                 <a href="/adminlistpoli/{{ $poli->id }}/edit" class="btn btn-primary mr-1"><i

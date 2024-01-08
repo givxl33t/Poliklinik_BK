@@ -35,7 +35,7 @@
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->alamat }}</td>
                             <td>{{ $item->no_hp }}</td>
-                            <td class="d-flex align-items-center justify-content-between">
+                            <td class="d-flex align-items-center">
                                 <a href="/detaildokter/{{ $item->id }}" class="btn btn-warning mr-1 text-white">
                                     <i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>
                                 <a href="/adminlistdokter/{{ $item->id }}/edit" class="btn btn-primary mr-1"><i

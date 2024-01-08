@@ -53,8 +53,10 @@
                         </tbody>
                     </table>
                 </div>
-                @if (empty($daftarpoli->periksas))
-                @else
+            </div>
+            @if (empty($daftarpoli->periksas))
+            @else
+            <div class="row">
                 <div class="col my-5">
                     <h1 class="text-center mb-5">Detail Pemeriksaan</h1>
                     <table class="table">
@@ -88,8 +90,8 @@
                         </tbody>
                     </table>
                 </div>
-                @endif
             </div>
+            @endif
         </div>
     </div>
 

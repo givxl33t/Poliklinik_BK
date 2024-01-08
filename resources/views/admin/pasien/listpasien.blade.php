@@ -38,7 +38,7 @@
                             <td>{{ $pasien->no_ktp }}</td>
                             <td>{{ $pasien->no_hp }}</td>
                             <td>{{ $pasien->no_rm }}</td>
-                            <td class="d-flex align-items-center justify-content-between">
+                            <td class="d-flex align-items-center">
                                 <a href="/detailpasien/{{ $pasien->id }}" class="btn btn-warning mr-1 text-white">
                                     <i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>
                                 <a href="/adminlistpasien/{{ $pasien->id }}/edit" class="btn btn-primary mr-1"><i

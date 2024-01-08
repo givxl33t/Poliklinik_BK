@@ -62,7 +62,11 @@
                             <tr class="align-items-center">
                                 <td>{{ $daftar->id }}</td>
                                 <td>{{ $daftar->keluhan }}</td>
-                                <td>{{ $daftar->no_antrian }}</td>
+                                @if ($daftar->no_antrian == null)
+                                    <td>Sudah Diperiksa</td>
+                                @else
+                                    <td>{{ $daftar->no_antrian }}</td>
+                                @endif
                                 <td>{{ $daftar->created_at }}</td>
                             </tr>
                         @endforeach

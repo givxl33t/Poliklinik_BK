@@ -76,6 +76,7 @@ class AdminController extends Controller
             ->whereMonth('created_at', $currentMonth)
             ->get();
         $newPasienOrderNumber = count($pasiensInCurrYearMonth) + 1;
+        $newPasienOrderNumber = sprintf("%03d", $newPasienOrderNumber);
         $no_rm = $currentYear . $currentMonth . '-' . $newPasienOrderNumber;
 
         while (Pasien::where('no_rm', $no_rm)->exists()) {
