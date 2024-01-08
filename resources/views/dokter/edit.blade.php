@@ -49,6 +49,19 @@
                 </div>
             @enderror
         </div>
+        <div class "mb-3">
+            <label for="aktif" class="form-label">Status</label>
+            <select class="form-select  @error('aktif') is-invalid @enderror" aria-label="Default select example"
+                name="aktif" id="aktif">
+                <option value="Y" @if($jadwal->aktif == 'Y') selected @endif>Aktif</option>
+                <option value="N" @if($jadwal->aktif == 'N') selected @endif>Tidak Aktif</option>
+            </select>
+            @error('aktif')
+                <div class="invalid-feedback">
+                    Status tidak boleh kosong
+                </div>
+            @enderror
+        </div>
         <button type="submit" class="btn btn-primary mt-3">Submit</button>
     </form>
 @endsection

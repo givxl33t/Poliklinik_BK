@@ -66,36 +66,43 @@ class DokterController extends Controller
             'hari' => 'required',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
+            'aktif' => 'required',
         ]);
 
         $id = Auth::user()->id;
-        $jadwal = JadwalPeriksa::where('id_dokter', $id)->first();
-        if ($jadwal) {
-            return redirect('/dokter')->with('error', 'Jadwal Periksa Sudah Ada!');
-        }
-
         $dokters = Dokter::with(['poli'])->where('id', $id)->get();
         $poliId = $dokters[0]->poli->id;
 
-        // get all jadwals from the same poli as the dokter
-        $jadwals = JadwalPeriksa::with(['dokter.poli'])
-        ->whereHas('dokter', function ($query) use ($poliId) {
-            $query->where('id_poli', $poliId);
-        })->get();
 
-        // make sure the new jadwal doesn't overlap with the existing ones
-        foreach ($jadwals as $jadwal) {
-            if ($jadwal->hari == $validated['hari']) {
-                if ($jadwal->jam_mulai <= $validated['jam_mulai'] && $jadwal->jam_selesai >= $validated['jam_mulai']) {
-                    return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
-                } else if ($jadwal->jam_mulai <= $validated['jam_selesai'] && $jadwal->jam_selesai >= $validated['jam_selesai']) {
-                    return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
-                } else if ($jadwal->jam_mulai >= $validated['jam_mulai'] && $jadwal->jam_selesai <= $validated['jam_selesai']) {
-                    return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
-                } else if ($jadwal->jam_mulai <= $validated['jam_mulai'] && $jadwal->jam_selesai >= $validated['jam_selesai']) {
-                    return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
-                } else if ($jadwal->jam_mulai >= $validated['jam_mulai'] && $jadwal->jam_selesai <= $validated['jam_selesai']) {
-                    return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
+        if ($validated['aktif'] == 'Y') {
+            $jadwal_aktif = JadwalPeriksa::where('id_dokter', $id)
+            ->where('aktif', 'Y')
+            ->first();
+
+            if ($jadwal_aktif) {
+                return redirect('/dokter')->with('error', 'Jadwal Periksa Aktif Sudah Ada!');
+            }
+
+            $jadwals = JadwalPeriksa::with(['dokter.poli'])
+            ->whereHas('dokter', function ($query) use ($poliId) {
+                $query->where('id_poli', $poliId);
+            })
+            ->where('aktif', 'Y')
+            ->get();
+
+            foreach ($jadwals as $jadwal) {
+                if ($jadwal->hari == $validated['hari']) {
+                    if ($jadwal->jam_mulai <= $validated['jam_mulai'] && $jadwal->jam_selesai >= $validated['jam_mulai']) {
+                        return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
+                    } else if ($jadwal->jam_mulai <= $validated['jam_selesai'] && $jadwal->jam_selesai >= $validated['jam_selesai']) {
+                        return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
+                    } else if ($jadwal->jam_mulai >= $validated['jam_mulai'] && $jadwal->jam_selesai <= $validated['jam_selesai']) {
+                        return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
+                    } else if ($jadwal->jam_mulai <= $validated['jam_mulai'] && $jadwal->jam_selesai >= $validated['jam_selesai']) {
+                        return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
+                    } else if ($jadwal->jam_mulai >= $validated['jam_mulai'] && $jadwal->jam_selesai <= $validated['jam_selesai']) {
+                        return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
+                    }
                 }
             }
         }
@@ -105,6 +112,7 @@ class DokterController extends Controller
             'jam_mulai' => $validated['jam_mulai'],
             'jam_selesai' => $validated['jam_selesai'],
             'id_dokter' => $request->id_dokter,
+            'aktif' => $validated['aktif'],
         ]);
 
         return redirect('/dokter')->with('success', 'Jadwal Periksa Berhasil Dibuat!');
@@ -124,6 +132,7 @@ class DokterController extends Controller
             'hari' => 'required',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
+            'aktif' => 'required',
         ]);
 
         $id = Auth::user()->id;
@@ -135,30 +144,39 @@ class DokterController extends Controller
         $dokters = Dokter::with(['poli'])->where('id', $id)->get();
         $poliId = $dokters[0]->poli->id;
 
-        // get all jadwals from the same poli as the dokter
-        $jadwals = JadwalPeriksa::with(['dokter.poli'])
-        ->whereHas('dokter', function ($query) use ($poliId) {
-            $query->where('id_poli', $poliId);
-        })->get();
+        if ($validated['aktif'] === 'Y') {
+            $jadwal_aktif = JadwalPeriksa::where('id_dokter', $id)
+            ->where('aktif', 'Y')
+            ->first();
 
-        // exclude current jadwal from the list
-        $jadwals = $jadwals->filter(function ($value, $key) use ($jadwal) {
-            return $value->id != $jadwal->id;
-        });
+            if ($jadwal_aktif) {
+                return redirect('/dokter')->with('error', 'Jadwal Periksa Aktif Sudah Ada!');
+            }
 
-        // make sure the new jadwal doesn't overlap with the existing ones
-        foreach ($jadwals as $jadwal) {
-            if ($jadwal->hari == $validated['hari']) {
-                if ($jadwal->jam_mulai <= $validated['jam_mulai'] && $jadwal->jam_selesai >= $validated['jam_mulai']) {
-                    return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
-                } else if ($jadwal->jam_mulai <= $validated['jam_selesai'] && $jadwal->jam_selesai >= $validated['jam_selesai']) {
-                    return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
-                } else if ($jadwal->jam_mulai >= $validated['jam_mulai'] && $jadwal->jam_selesai <= $validated['jam_selesai']) {
-                    return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
-                } else if ($jadwal->jam_mulai <= $validated['jam_mulai'] && $jadwal->jam_selesai >= $validated['jam_selesai']) {
-                    return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
-                } else if ($jadwal->jam_mulai >= $validated['jam_mulai'] && $jadwal->jam_selesai <= $validated['jam_selesai']) {
-                    return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
+            $jadwals = JadwalPeriksa::with(['dokter.poli'])
+            ->whereHas('dokter', function ($query) use ($poliId) {
+                $query->where('id_poli', $poliId);
+            })
+            ->where('aktif', 'Y')
+            ->get();
+
+            $jadwals = $jadwals->filter(function ($value, $key) use ($jadwal) {
+                return $value->id != $jadwal->id;
+            });
+
+            foreach ($jadwals as $jadwal) {
+                if ($jadwal->hari == $validated['hari']) {
+                    if ($jadwal->jam_mulai <= $validated['jam_mulai'] && $jadwal->jam_selesai >= $validated['jam_mulai']) {
+                        return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
+                    } else if ($jadwal->jam_mulai <= $validated['jam_selesai'] && $jadwal->jam_selesai >= $validated['jam_selesai']) {
+                        return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
+                    } else if ($jadwal->jam_mulai >= $validated['jam_mulai'] && $jadwal->jam_selesai <= $validated['jam_selesai']) {
+                        return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
+                    } else if ($jadwal->jam_mulai <= $validated['jam_mulai'] && $jadwal->jam_selesai >= $validated['jam_selesai']) {
+                        return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
+                    } else if ($jadwal->jam_mulai >= $validated['jam_mulai'] && $jadwal->jam_selesai <= $validated['jam_selesai']) {
+                        return redirect('/dokter')->with('error', 'Jadwal Periksa Tidak Boleh Tumpang Tindih!');
+                    }
                 }
             }
         }
@@ -167,12 +185,12 @@ class DokterController extends Controller
             'hari' => $validated['hari'],
             'jam_mulai' => $validated['jam_mulai'],
             'jam_selesai' => $validated['jam_selesai'],
+            'aktif' => $validated['aktif'],
         ]);
 
         return redirect('/dokter')->with('success', 'Jadwal Periksa Berhasil Diubah!');
     }
 
-    // edit profil dokter
     public function editdokter()
     {
         $id = Auth::user()->id;

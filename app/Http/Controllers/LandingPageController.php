@@ -12,7 +12,10 @@ class LandingPageController extends Controller
 {
     public function index() {
         $polis = Poli::all();
-        $dokters = Dokter::with('jadwal_periksas')->get();
+        // get dokters that have active jadwal_periksas
+        $dokters = Dokter::whereHas('jadwal_periksas', function ($query) {
+            $query->where('aktif', 'Y');
+        })->get();
 
         return view('landingpage', compact('polis', 'dokters'));
     }
@@ -32,6 +35,7 @@ class LandingPageController extends Controller
             ->whereMonth('created_at', $currentMonth)
             ->get();
         $newPasienOrderNumber = count($pasiensInCurrYearMonth) + 1;
+        $newPasienOrderNumber = sprintf("%03d", $newPasienOrderNumber);
         $no_rm = $currentYear . $currentMonth . '-' . $newPasienOrderNumber;
 
         while (Pasien::where('no_rm', $no_rm)->exists()) {
@@ -83,7 +87,12 @@ class LandingPageController extends Controller
             return redirect(route('landingpage'))->with('error', 'Jadwal dokter tidak ditemukan!');
         }
 
-        $no_antrian = DaftarPoli::where('id_jadwal', $jadwalDokter->id)->count() + 1;
+        // ge the last no antrian
+        $lastNoAntrian = DaftarPoli::where('id_jadwal', $jadwalDokter->id)->orderBy('no_antrian', 'desc')->first();
+        $no_antrian = 1;
+        if ($lastNoAntrian) {
+            $no_antrian = $lastNoAntrian->no_antrian + 1;
+        }
 
         if ($pasien) {
             DaftarPoli::create([

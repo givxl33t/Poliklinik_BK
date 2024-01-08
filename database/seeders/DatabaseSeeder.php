@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
                 'alamat' => 'Kp. Kemuning RT 01 RW 04, Kemuning Legok, Kabupaten Tangerang, Banten',
                 'no_ktp' => '1122334455',
                 'no_hp' => '083891428869',
-                'no_rm' => '202312-1',
+                'no_rm' => '202312-001',
                 'created_at' => now(),
                 'updated_at' => now()
             ]
@@ -70,6 +70,7 @@ class DatabaseSeeder extends Seeder
                 'hari' => 'Senin',
                 'jam_mulai' => '08:00:00',
                 'jam_selesai' => '12:00:00',
+                'aktif' => 'Y',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

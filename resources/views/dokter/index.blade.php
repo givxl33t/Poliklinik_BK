@@ -10,12 +10,10 @@
             </div>
         </div>
         <div class="row">
-            @if ($periksas->isEmpty())
-                <div class="col">
-                    <a href="{{ 'jadwalperiksa/add' }}" class="btn btn-primary my-4" type="button">+ Tambah Jadwal
-                        Periksa</a>
-                </div>
-            @endif
+            <div class="col">
+                <a href="{{ 'jadwalperiksa/add' }}" class="btn btn-primary my-4" type="button">+ Tambah Jadwal
+                    Periksa</a>
+            </div>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @if ($periksas->isEmpty())
@@ -30,6 +28,11 @@
                                 <img src="/css/schedule.jpg" class="img-fluid card-img-top">
                                 <div class="card-body">
                                     <h6 class="card-title">{{ $periksa->hari }}</h6>
+                                    @if ($periksa->aktif == 'Y')
+                                        <h6 style="color:black"><span class="badge bg-success">Aktif</span></h6>
+                                    @else
+                                        <h6 style="color:black"><span class="badge bg-danger">Tidak Aktif</span></h6>
+                                    @endif
                                     <span style="color:black">{{ $periksa->jam_mulai }} - {{ $periksa->jam_selesai }}</span>
                                 </div>
                             </div>
