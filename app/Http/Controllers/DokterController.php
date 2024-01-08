@@ -144,8 +144,9 @@ class DokterController extends Controller
         $dokters = Dokter::with(['poli'])->where('id', $id)->get();
         $poliId = $dokters[0]->poli->id;
 
-        if ($validated['aktif'] === 'Y') {
+        if ($validated['aktif'] == "Y") {
             $jadwal_aktif = JadwalPeriksa::where('id_dokter', $id)
+            ->where('id', '!=', $request->id)
             ->where('aktif', 'Y')
             ->first();
 
@@ -157,12 +158,9 @@ class DokterController extends Controller
             ->whereHas('dokter', function ($query) use ($poliId) {
                 $query->where('id_poli', $poliId);
             })
+            ->where('id', '!=', $request->id)
             ->where('aktif', 'Y')
             ->get();
-
-            $jadwals = $jadwals->filter(function ($value, $key) use ($jadwal) {
-                return $value->id != $jadwal->id;
-            });
 
             foreach ($jadwals as $jadwal) {
                 if ($jadwal->hari == $validated['hari']) {
