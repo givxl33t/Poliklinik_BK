@@ -146,7 +146,7 @@ nav .kanan .signup {
 
 /* UMKM PRODUCT PAGE */
 .umkm {
-    margin: 100px 0 200px 0;
+    margin: 70px 0 50px 0;
 }
 
 .umkm .card {
@@ -191,7 +191,7 @@ nav .kanan .signup {
 }
 
 .hero {
-    height: 10vh;
+    height: 30vh;
     width: 100%;
     background-image: url("../css/hero.jpg");
     background-size: cover;

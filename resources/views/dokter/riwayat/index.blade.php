@@ -28,11 +28,11 @@
                                     <tr>
                                         <th scope="col">Nama Pasien</th>
                                         <th scope="col">Tanggal Periksa</th>
+                                        <th scope="col">Keluhan</th>
                                         <th scope="col">Catatan</th>
-                                        <th scope="col">Biaya Periksa</th>
-                                        <th scope="col">Alamat</th>
+                                        <th scope="col">Obat</th>
                                         <th scope="col">Nomor HP</th>
-                                        <th scope="col">Nomor Rekam Medis</th>
+                                        <th scope="col">Biaya Periksa</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,11 +40,19 @@
                                     <tr>
                                         <td>{{ $riwayat->daftar_poli->pasien->nama }}</td>
                                         <td>{{ $riwayat->tgl_periksa }}</td>
+                                        <td>{{ $riwayat->daftar_poli->keluhan }}</td>
                                         <td>{{ $riwayat->catatan }}</td>
-                                        <td>{{ $riwayat->biaya_periksa }}</td>
-                                        <td>{{ $riwayat->daftar_poli->pasien->alamat }}</td>
+                                        <td>
+                                            <ul>
+                                                @foreach ($riwayat->detail_periksas as $detail_periksa)
+                                                    <li>{{ $detail_periksa->obat->nama_obat }}
+                                                        | {{ $detail_periksa->obat->kemasan }}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
                                         <td>{{ $riwayat->daftar_poli->pasien->no_hp }}</td>
-                                        <td>{{ $riwayat->daftar_poli->pasien->no_rm }}</td>
+                                        <td>Rp{{ number_format($riwayat->biaya_periksa, 0, ',', '.') }}</td>
                                     </tr>
                                   @endforeach
                                 </tbody>

@@ -20,7 +20,8 @@ return new class extends Migration
             $table->foreignId("id_jadwal");
             $table->foreign("id_jadwal")->references("id")->on("jadwal_periksa")->onDelete("cascade");
             $table->text("keluhan");
-            $table->unsignedInteger("no_antrian");
+            $table->unsignedInteger("no_antrian")->nullable();
+            $table->boolean("is_deleted")->default(false);
             $table->timestamps();
         });
     }

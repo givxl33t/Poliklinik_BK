@@ -44,7 +44,7 @@
             </div>
             <div class="my-5">
                 <div class="header">
-                    <h3>Data UMKM</h3>
+                    <h3>Data Jadwal</h3>
                     <p class="text-secondary">Data jadwal dokter {{ $dokter->nama }}</p>
                 </div>
                 @php
@@ -54,6 +54,7 @@
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Hari</th>
                             <th scope="col">Jam Mulai</th>
                             <th scope="col">Jam Selesai</th>
@@ -63,6 +64,11 @@
                         @foreach ($dokter->jadwal_periksas as $jadwal)
                             <tr class="align-items-center">
                                 <td>{{ $jadwal->id }}</td>
+                                @if ($jadwal->aktif == 'Y')
+                                    <td><span class="badge badge-success">Aktif</span></td>
+                                @else
+                                    <td><span class="badge badge-danger">Tidak Aktif</span></td> 
+                                @endif
                                 <td>{{ $jadwal->hari }}</td>
                                 <td>{{ $jadwal->jam_mulai }}</td>
                                 <td>{{ $jadwal->jam_selesai }}</td>

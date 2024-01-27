@@ -6,12 +6,7 @@
         <div class="card-header">
             <h3 class="card-title">Pasien List</h3>
             <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                </button>
+                <a href="/adminlistpasien/add" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
             </div>
             <div class="mt-5">
                 <form action="" method="GET">
@@ -43,11 +38,12 @@
                             <td>{{ $pasien->no_ktp }}</td>
                             <td>{{ $pasien->no_hp }}</td>
                             <td>{{ $pasien->no_rm }}</td>
-                            <td class="d-flex align-items-center justify-content-between">
+                            <td class="d-flex align-items-center">
                                 <a href="/detailpasien/{{ $pasien->id }}" class="btn btn-warning mr-1 text-white">
                                     <i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>
-                                <div style="width: 10px"></div>
-                                <a href="/adminlistpasien/{{ $pasien->id }}/delete" class="btn btn-danger"><i
+                                <a href="/adminlistpasien/{{ $pasien->id }}/edit" class="btn btn-primary mr-1"><i
+                                    class="fa-solid fa-edit"></i></a>
+                                <a href="/adminlistpasien/{{ $pasien->id }}/delete" class="btn btn-danger mr-1"><i
                                         class="fa-solid fa-trash-can"></i></a>
                             </td>
                         </tr>

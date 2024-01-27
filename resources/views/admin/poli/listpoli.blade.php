@@ -5,17 +5,12 @@
         <div class="card-header">
             <h3 class="card-title">Poli List</h3>
             <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                </button>
+                <a href="/adminlistpoli/add" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
             </div>
             <div class="mt-5">
                 <form action="" method="GET">
                     @csrf
-                    <input type="text" class="form-control" placeholder="Cari Poli disini" name="keyword"
+                    <input type="text" class="form-control" placeholder="Cari poli disini" name="keyword"
                         style="border-radius: 12px">
                 </form>
             </div>
@@ -27,7 +22,9 @@
                         <th scope="col">No.</th>
                         <th scope="col">Nama Poli</th>
                         <th scope="col">Keterangan</th>
+                        <th scope="col">Jumlah Dokter</th>
                         <th scope="col">Tanggal Ditambah</th>
+                        <th scope="col">Tanggal Diubah</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -37,12 +34,15 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $poli->nama_poli }}</td>
                             <td>{{ $poli->keterangan }}</td>
+                            <td>{{ $poli->dokters->count() }}</td>
                             <td>{{ $poli->created_at }}</td>
-                            <td class="d-flex justify-content-between align-items-center">
+                            <td>{{ $poli->updated_at }}</td>
+                            <td class="d-flex align-items-center">
                                 <a href="/detailpoli/{{ $poli->id }}" class="btn btn-warning mr-1 text-white">
                                     <i class="fa-sharp fa-solid fa-magnifying-glass"></i></a>
-                                <div style="width: 10px"></div>
-                                <a href="/adminlistpoli/{{ $poli->id }}/delete" class="btn btn-danger"><i
+                                <a href="/adminlistpoli/{{ $poli->id }}/edit" class="btn btn-primary mr-1"><i
+                                    class="fa-solid fa-edit"></i></a>
+                                <a href="/adminlistpoli/{{ $poli->id }}/delete" class="btn btn-danger mr-1"><i
                                         class="fa-solid fa-trash-can"></i></a>
                             </td>
                         </tr>

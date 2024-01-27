@@ -4,8 +4,7 @@
 
 @section('content')
     <div class="container">
-        @foreach ($dokters as $dokter)
-        <div class="row">
+        <div class="row my-5">
             <div class="col">
                 <h1 class="text-center">Edit Profil {{ $dokter->nama }}</h1>
             </div>
@@ -58,6 +57,19 @@
                         @enderror
                     </div>
                     <div class="mb-3">
+                        <label for="poli" class="form-label">Poli</label>
+                        <select class="form-select @error('poli') is-invalid @enderror" id="id_poli" name="id_poli">
+                            @foreach ($polis as $poli)
+                                <option value="{{ $poli->id }}" @if ($poli->id == $dokter->id_poli) selected @endif>{{ $poli->nama_poli }}</option>
+                            @endforeach
+                        </select>
+                        @error('poli')
+                            <div class="invalid-feedback">
+                                Poli tidak boleh kosong
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
                         <label for="no_hp" class="form-label">No. HP</label>
                         <input type="text" class="form-control @error('no_hp') is-invalid @enderror"
                             id="no_hp" name="no_hp" value="{{ $dokter->no_hp }}">
@@ -71,6 +83,5 @@
                 </form>
             </div>
         </div>
-        @endforeach
     </div>
 @endsection
